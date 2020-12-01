@@ -1,3 +1,3 @@
 modules.exports = {
-  notes: require('./noteSaver')
+  notes: require('./notes')
 }
