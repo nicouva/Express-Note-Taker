@@ -1,12 +1,15 @@
 const express = require('express')
-const { join } = require('path')
+const htmlRoutes = require('./routes/htmlRoutes.js')
+const path = require('path')
+
 
 const app = express()
+const PORT = process.env.PORT || 3000
 
-app.use(express.static(join(__dirname, 'public')))
+app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-app.use(require('./routes'))
+app.use('/', htmlRoutes)
 
-app.listen(process.env.PORT || 3000)
+app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));

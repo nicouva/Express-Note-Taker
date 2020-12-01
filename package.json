@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/nicouva/Express-Note-Taker/issues"
   },
-  "homepage": "https://github.com/nicouva/Express-Note-Taker#readme"
+  "homepage": "https://github.com/nicouva/Express-Note-Taker#readme",
+  "dependencies": {
+    "axios": "^0.21.0"
+  }
 }
