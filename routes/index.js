@@ -12,7 +12,7 @@ router.get('/notes', (req, res) => {
   res.json(notes[req.params.id])
 })
 
-router.delete('api/notes:id', (req, res) => {
+router.delete('/notes:id', (req, res) => {
   notes.splice(req.params.id, 1)
   updateDb()
   console.log('Deleted note with id')
