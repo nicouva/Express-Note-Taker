@@ -1,4 +1,4 @@
 let notes = []
 
-modules.exports = notes
+module.exports = notes
 
