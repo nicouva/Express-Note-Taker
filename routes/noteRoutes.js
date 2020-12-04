@@ -2,29 +2,37 @@ const router = require('express').Router()
 const { notes } = require('../db')
 const fs = require('fs')
 
-router.post('/notes', (req, res) => {
-  notes.push(req.body)
-  updateDb()
-  console.log('Added new note')
-  res.sendStatus(200)
-})
-
 router.get('/notes', (req, res) => {
-  res.json(notes[req.params.id])
+  let savedNotes = JSON.parse(fs.readFileSync('../db', 'utf8'))
+  res.json(savedNotes[Number(req.params.id)])
 })
 
-router.delete('/notes:id', (req, res) => {
-  let id = req.params
-  res.json(notes)
-  let objextIndex = notes.findIndex(value => value.id === parseInt(id.id))
-  console.log(objectIndex)
-  notes.forEach((item, i) => {
-    if (i === objextIndex) {
-      notes.splice(i, 1)
-    } else {
-      console.log('error')
-    }
+router.post('/notes', (req, res) => {
+  let savedNotes = JSON.parse(fs.readFileSync('../db', 'utf8'))
+  let newNote = req.body
+  let uniqueID = (savedNotes.length).toString()
+  newNote.id = uniqueID
+  savedNotes.push(newNote)
+
+  fs.writeFileSync('../db', JSON.stringify(savedNotes))
+  console.log('Note Saved!')
+  res.json(savedNotes)
+})
+
+router.delete('/notes/:id', (req, res) => {
+  let savedNotes = JSON.parse(fs.readFileSync('../db', 'utf8'))
+  let notedID = req.params.id
+  let newID = 0
+  console.log(`Deleting with Note ${noteID}`)
+  savedNotes = savedNotes.filter(currentNote => {
+    return currentNote.id != noteID
   })
+  for (currentNote of savedNotes) {
+    currentNote.id = newID.toString()
+    newID++
+  }
+  fs.writeFileSync('../db', JSON.stringify(savedNotes))
+  res.json(savedNotes)
 })
 
 module.exports = router
