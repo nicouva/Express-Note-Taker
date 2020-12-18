@@ -1,38 +1,26 @@
 const router = require('express').Router()
 const { notes } = require('../db')
-const fs = require('fs')
-
-router.get('/notes', (req, res) => {
-  let savedNotes = JSON.parse(fs.readFileSync('../db', 'utf8'))
-  res.json(savedNotes[Number(req.params.id)])
-})
 
 router.post('/notes', (req, res) => {
-  let savedNotes = JSON.parse(fs.readFileSync('../db', 'utf8'))
-  let newNote = req.body
-  let uniqueID = (savedNotes.length).toString()
-  newNote.id = uniqueID
-  savedNotes.push(newNote)
+  notes.push(req.body)
+  res.sendStatus(200)
+})
 
-  fs.writeFileSync('../db', JSON.stringify(savedNotes))
-  console.log('Note Saved!')
-  res.json(savedNotes)
+router.get('/notes', (req, res) => {
+  res.json(notes)
 })
 
 router.delete('/notes/:id', (req, res) => {
-  let savedNotes = JSON.parse(fs.readFileSync('../db', 'utf8'))
-  let notedID = req.params.id
-  let newID = 0
-  console.log(`Deleting with Note ${noteID}`)
-  savedNotes = savedNotes.filter(currentNote => {
-    return currentNote.id != noteID
+  let id = req.params
+  res.json(notes)
+  let objectIndex = notes.findIndex(value => value.id === parseInt(id.id))
+  notes.forEach((notes, i) => {
+    if (i === objectIndex) {
+      notes.splice(i, 1)
+    } else {
+      console.log('not working')
+    }
   })
-  for (currentNote of savedNotes) {
-    currentNote.id = newID.toString()
-    newID++
-  }
-  fs.writeFileSync('../db', JSON.stringify(savedNotes))
-  res.json(savedNotes)
 })
 
-module.exports = router
+module.exports = router 
