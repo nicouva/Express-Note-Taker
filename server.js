@@ -12,6 +12,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use('/api', notesRoutes)
-app.use('/', htmlRoutes)
+app.use('/', htmlRoutes) 
 
-app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
+app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`))
